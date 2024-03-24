@@ -44,6 +44,8 @@ const metadata = Buffer.from(
 
 const tokenURI = await sdrive.upload(metadata, "token.json");
 
+const tokenAmount = process.env.TOKEN_AMOUNT;
+
 const mint = generateSigner(umi);
 umi.use(signerIdentity(userWalletSigner));
 umi.use(mplCandyMachine());
@@ -56,7 +58,7 @@ createAndMint(umi, {
   uri: tokenURI.permalink,
   sellerFeeBasisPoints: percentAmount(0),
   decimals: 8,
-  amount: 1000000_00000000,
+  amount: tokenAmount*1e8,
   tokenOwner: userWallet.publicKey,
   tokenStandard: TokenStandard.Fungible,
 })
